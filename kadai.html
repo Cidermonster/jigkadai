@@ -70,7 +70,9 @@ function gcnt(x,y){
 
 function Make_map(){
         for(i=0;i<100;i++){
-                Stage[i] = 0; Stage_blank[i] = 0; Touch[i] = 0;
+                Stage[i] = 0;
+                Stage_blank[i] = 0;
+                Touch[i] = 0;
                 document.images[i].src = "Reset_data.jpg";
         }
 
@@ -112,7 +114,10 @@ function Open_bomb(){
 }
 
 function Open_Stage(x,y){
-        cnt1 = 0; cnt2 = 1; Stage_X = x; Stage_Y = y;
+        cnt1 = 0;
+        cnt2 = 1;
+        Stage_X = x;
+        Stage_Y = y;
         Q = x+10*y;
         Stage_blank[Q] = 1;
         blank_data = Stage[Q]+".jpg";
