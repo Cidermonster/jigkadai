@@ -1,0 +1,357 @@
+<html>
+<body>
+<link href="./style4.css" rel="stylesheet" type="text/css">
+<div id="header">
+        <p><h1 align="center">マインスイーパー</h1></p>
+</div>
+</body>
+<head>
+<title>マインスイーパー</title>
+<script language="JavaScript">
+
+var bomb;
+Stage = new Array(100);
+Stage_blank = new Array(100);
+Stage_X = new Array(10);
+Stage_Y = new Array(10);
+Touch = new Array(100);
+
+var Gameover = 0;
+
+function gcnt(x,y){
+        tcnt = 0;
+        if(x>0){
+                Q = x+10*y-1;
+                if(Stage[Q] = 99){
+                        tcnt++;
+                }
+                if(y>0){
+                        Q = x+10*(y-1)-1;
+                        if(Stage[Q] == 99){
+                                tcnt++;
+                        }
+                }
+                if(y<9){
+                        Q = x+10*(y+1)-1;
+                        if(Stage[Q] == 99){
+                                tcnt++;
+                        }
+                }
+        }
+        if(x<9){
+                Q = x+10*y+1;
+                if(Stage[Q] = 99){
+                        tcnt++;
+                }
+                if(y>0){
+                        Q = x+10*(y-1)+1;
+                        if(Stage[Q] == 99){
+                                tcnt++;
+                        }
+                }
+                if(y<9){
+                        Q = x+10*(y+1)+1;
+                        if(Stage[Q] == 99){
+                                tcnt++;
+                        }
+                }
+        }
+        if(y>0){
+                Q = x+10*(y+1);
+                if(Stage[Q] == 99){
+                        tcnt++;
+                }
+        }
+        if(y<9){
+                Q = x+10*(y-1);
+                if(Stage[Q] == 99){
+                        tcnt++;
+                }
+        }
+        return (tcnt);
+}
+
+function Make_map(){
+        for(i=0;i<100;i++){
+                Stage[i] = 0; Touch[i] = 0; Stage_blank[i] = 0;
+                document.images[i].src = "Reset_data.jpg";
+        }
+
+        bomb = Math.round(Math.random()*5)+10;
+        document.ms.cnt.value = bomb;
+        cnt = 0;
+        while(1){
+                j=Math.round(Math.random()*100);
+                if(Stage[j] == 0){
+                        Stage[j] = 99;
+                        cnt++;
+                        if(cnt == bomb){
+                                break;
+                        }
+                }
+        }
+
+        for(k=0;k<10;k++){
+                for(l=0;l<10;l++){
+                        N = k+10*l;
+                        if(Stage[N] != 99){
+                                cnt = gcnt(k,l);
+                                Stage[N] = cnt;
+                        }
+                }
+        }
+        Gameover = 0;
+}
+
+function Open_bomb(){
+        for(i=0;i<100;i++){
+                if(Touch[i] == 1) && (Stage[i] != 99){
+                        document.images[i].src = "100.jpg";
+                }
+                if(Stage[i] == 99){
+                        document.images[i].src = "99.jpg";
+                }
+        }
+}
+
+function Open_Stage(x,y){
+        cnt1 = 0; cnt1 = 1; Stage_X = x; Stage_Y = y;
+        N = x+10*y;
+        Stage_blank[N] = 1;
+        blank_data = Stage[N]+".jpg";
+        document.images[N].src = blank_data;
+        if(Stage[N] == 0){
+                Click_Stage();
+        }
+}
+
+function check(x,y){
+        N = x+10*y;
+        if(Stage_blank[N] == 1){
+                return;
+        }
+        if(Touch[N] == 0){
+                Stage_X[cnt2] = x; Stage_Y[cnt2] = y;
+                cnt2++;
+        }
+        if(Stage[N] != 99){
+                Stage_blank[N] = 1;
+                blank_data = Stage[N]+".jpg";
+                document.images[N].src = blank_data;
+        }
+}
+
+function Click_Stage(x,y){
+        while(1){
+                loop = cnt1;
+                cnt1 = cnt2;
+                for(i=loop;i<cnt1;i++){
+                        if(Stage_X[i]>0){
+                                check(Stage_X[i]-1,Stage_Y[i]);
+                        }
+                        if(Stage_X[i]<9){
+                                check(Stage_X[i]+1,Stage_Y[i]);
+                        }
+                        if(Stage_Y[i]>0){
+                                check(Stage_X[i],Stage_Y[i]-1);
+                        }
+                        if(Stage_Y[i]<9){
+                                check(Stage_X[i],Stage_Y[i]+1);
+                        }
+                }
+                if(cnt1 == cnt2){
+                        break;
+                }
+        }
+}
+
+function Set(x,y){
+        if(Gameover == 1){
+                alert("リセットしてください.");
+        }
+        set = x+10*y;
+        if(Stage_blank[set] == 1){
+                return;
+        }
+        Open_Stage(x,y);
+
+        if(Stage[set] == 99){
+                alert("爆弾を押しました.あなたの敗北となります.");
+                Gameover = 1;
+                Open_bomb();
+                return;
+        }
+
+        cnt = 0;
+        for(i=0;i<100;i++){
+                if(Stage_blank[i] == 0){
+                        cnt++;
+                }
+        }
+        if(cnt == bomb){
+                alert("爆弾を全て見つけました!クリアとなります.");
+                Gameover = 1;
+                Open_bomb();
+                return;
+        }
+}
+
+function change_data(x,y){
+        N = x+10*y;
+        if(Stage_blank[N] == 1){
+                return;
+        }
+        if(Touch[N] == 1){
+                document.images[N].src = "Reset_data.jpg";
+                Touch[N] = 0;
+                return;
+        }
+        if(Touch[N] ==0){
+                document.images[N].src = "99.jpg";
+                Touch[N] = 1;
+        }
+}
+
+</script>
+</head>
+<body onload="Make_map();">
+<div align="center">
+        <table border="2">
+                <tbody>
+                <tr>
+                        <td>
+                                <script language="JavaScript">
+for(i=0;i<10;i++){
+        for(j=0;j<10;j++){
+                document.write('<a href=JavaScript:set(',j,',',i,')><img src=Rset_data.jpg textmenu="change_data(',j,',',i,'); return false" border=0 width=32 height=32></a>');
+        }
+        document.write("<br>\n");
+}
+                                </script>
+                                <a href="JavaScript:set(0,0)"><img src="Reset_data.jpg" textmenu="change_data(0,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,0)"><img src="Reset_data.jpg" textmenu="change_data(1,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,0)"><img src="Reset_data.jpg" textmenu="change_data(2,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,0)"><img src="Reset_data.jpg" textmenu="change_data(3,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,0)"><img src="Reset_data.jpg" textmenu="change_data(4,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,0)"><img src="Reset_data.jpg" textmenu="change_data(5,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,0)"><img src="Reset_data.jpg" textmenu="change_data(6,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,0)"><img src="Reset_data.jpg" textmenu="change_data(7,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,0)"><img src="Reset_data.jpg" textmenu="change_data(8,0); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,0)"><img src="Reset_data.jpg" textmenu="change_data(9,0); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,1)"><img src="Reset_data.jpg" textmenu="change_data(0,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,1)"><img src="Reset_data.jpg" textmenu="change_data(1,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,1)"><img src="Reset_data.jpg" textmenu="change_data(2,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,1)"><img src="Reset_data.jpg" textmenu="change_data(3,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,1)"><img src="Reset_data.jpg" textmenu="change_data(4,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,1)"><img src="Reset_data.jpg" textmenu="change_data(5,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,1)"><img src="Reset_data.jpg" textmenu="change_data(6,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,1)"><img src="Reset_data.jpg" textmenu="change_data(7,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,1)"><img src="Reset_data.jpg" textmenu="change_data(8,1); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,1)"><img src="Reset_data.jpg" textmenu="change_data(9,1); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,2)"><img src="Reset_data.jpg" textmenu="change_data(0,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,2)"><img src="Reset_data.jpg" textmenu="change_data(1,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,2)"><img src="Reset_data.jpg" textmenu="change_data(2,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,2)"><img src="Reset_data.jpg" textmenu="change_data(3,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,2)"><img src="Reset_data.jpg" textmenu="change_data(4,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,2)"><img src="Reset_data.jpg" textmenu="change_data(5,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,2)"><img src="Reset_data.jpg" textmenu="change_data(6,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,2)"><img src="Reset_data.jpg" textmenu="change_data(7,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,2)"><img src="Reset_data.jpg" textmenu="change_data(8,2); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,2)"><img src="Reset_data.jpg" textmenu="change_data(9,2); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,3)"><img src="Reset_data.jpg" textmenu="change_data(0,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,3)"><img src="Reset_data.jpg" textmenu="change_data(1,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,3)"><img src="Reset_data.jpg" textmenu="change_data(2,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,3)"><img src="Reset_data.jpg" textmenu="change_data(3,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,3)"><img src="Reset_data.jpg" textmenu="change_data(4,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,3)"><img src="Reset_data.jpg" textmenu="change_data(5,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,3)"><img src="Reset_data.jpg" textmenu="change_data(6,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,3)"><img src="Reset_data.jpg" textmenu="change_data(7,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,3)"><img src="Reset_data.jpg" textmenu="change_data(8,3); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,3)"><img src="Reset_data.jpg" textmenu="change_data(9,3); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,4)"><img src="Reset_data.jpg" textmenu="change_data(0,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,4)"><img src="Reset_data.jpg" textmenu="change_data(1,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,4)"><img src="Reset_data.jpg" textmenu="change_data(2,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,4)"><img src="Reset_data.jpg" textmenu="change_data(3,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,4)"><img src="Reset_data.jpg" textmenu="change_data(4,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,4)"><img src="Reset_data.jpg" textmenu="change_data(5,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,4)"><img src="Reset_data.jpg" textmenu="change_data(6,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,4)"><img src="Reset_data.jpg" textmenu="change_data(7,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,4)"><img src="Reset_data.jpg" textmenu="change_data(8,4); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,4)"><img src="Reset_data.jpg" textmenu="change_data(9,4); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,5)"><img src="Reset_data.jpg" textmenu="change_data(0,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,5)"><img src="Reset_data.jpg" textmenu="change_data(1,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,5)"><img src="Reset_data.jpg" textmenu="change_data(2,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,5)"><img src="Reset_data.jpg" textmenu="change_data(3,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,5)"><img src="Reset_data.jpg" textmenu="change_data(4,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,5)"><img src="Reset_data.jpg" textmenu="change_data(5,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,5)"><img src="Reset_data.jpg" textmenu="change_data(6,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,5)"><img src="Reset_data.jpg" textmenu="change_data(7,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,5)"><img src="Reset_data.jpg" textmenu="change_data(8,5); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,5)"><img src="Reset_data.jpg" textmenu="change_data(9,5); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,6)"><img src="Reset_data.jpg" textmenu="change_data(0,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,6)"><img src="Reset_data.jpg" textmenu="change_data(1,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,6)"><img src="Reset_data.jpg" textmenu="change_data(2,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,6)"><img src="Reset_data.jpg" textmenu="change_data(3,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,6)"><img src="Reset_data.jpg" textmenu="change_data(4,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,6)"><img src="Reset_data.jpg" textmenu="change_data(5,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,6)"><img src="Reset_data.jpg" textmenu="change_data(6,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,6)"><img src="Reset_data.jpg" textmenu="change_data(7,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,6)"><img src="Reset_data.jpg" textmenu="change_data(8,6); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,6)"><img src="Reset_data.jpg" textmenu="change_data(9,6); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,7)"><img src="Reset_data.jpg" textmenu="change_data(0,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,7)"><img src="Reset_data.jpg" textmenu="change_data(1,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,7)"><img src="Reset_data.jpg" textmenu="change_data(2,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,7)"><img src="Reset_data.jpg" textmenu="change_data(3,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,7)"><img src="Reset_data.jpg" textmenu="change_data(4,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,7)"><img src="Reset_data.jpg" textmenu="change_data(5,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,7)"><img src="Reset_data.jpg" textmenu="change_data(6,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,7)"><img src="Reset_data.jpg" textmenu="change_data(7,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,7)"><img src="Reset_data.jpg" textmenu="change_data(8,7); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,7)"><img src="Reset_data.jpg" textmenu="change_data(9,7); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,8)"><img src="Reset_data.jpg" textmenu="change_data(0,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,8)"><img src="Reset_data.jpg" textmenu="change_data(1,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,8)"><img src="Reset_data.jpg" textmenu="change_data(2,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,8)"><img src="Reset_data.jpg" textmenu="change_data(3,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,8)"><img src="Reset_data.jpg" textmenu="change_data(4,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,8)"><img src="Reset_data.jpg" textmenu="change_data(5,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,8)"><img src="Reset_data.jpg" textmenu="change_data(6,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,8)"><img src="Reset_data.jpg" textmenu="change_data(7,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,8)"><img src="Reset_data.jpg" textmenu="change_data(8,8); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,8)"><img src="Reset_data.jpg" textmenu="change_data(9,8); return false" border="0" width="32" height="32"></a>
+                                <br>
+                                <a href="JavaScript:set(0,9)"><img src="Reset_data.jpg" textmenu="change_data(0,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(1,9)"><img src="Reset_data.jpg" textmenu="change_data(1,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(2,9)"><img src="Reset_data.jpg" textmenu="change_data(2,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(3,9)"><img src="Reset_data.jpg" textmenu="change_data(3,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(4,9)"><img src="Reset_data.jpg" textmenu="change_data(4,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(5,9)"><img src="Reset_data.jpg" textmenu="change_data(5,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(6,9)"><img src="Reset_data.jpg" textmenu="change_data(6,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(7,9)"><img src="Reset_data.jpg" textmenu="change_data(7,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(8,9)"><img src="Reset_data.jpg" textmenu="change_data(8,9); return false" border="0" width="32" height="32"></a>
+                                <a href="JavaScript:set(9,9)"><img src="Reset_data.jpg" textmenu="change_data(9,9); return false" border="0" width="32" height="32"></a>
+                                <br>
+                        </td>
+                </tr>
+                </tbody>
+        </table>
+        <form name="ms">
+                "地雷の個数:"
+                <input type="text" value alt name="cnt" size="4">
+                "個"
+                <br>
+                <br>
+                <input type="button" value="Reset" onclick="Make_map();">
+        </form>
+        <br>
+</div>
+<hr>
+</body>
+</html>
