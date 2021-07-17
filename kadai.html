@@ -225,10 +225,7 @@ function change_data(x,y){
                                 <script language="JavaScript">
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
-                document.write('<a 
-                               href=JavaScript:Set('j','i')><img src=Reset_data.jpg
-                oncontextmenu="change_data('j','i');return false" border=0
-                width=32 height=32></a>');
+                document.write('<a href=JavaScript:Set(j,i)><img src=Reset_data.jpg oncontextmenu="change_data(j,i);return false" border=0 width=32 height=32></a>');
         }
         document.write("<br>\n");
 }
