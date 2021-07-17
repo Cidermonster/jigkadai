@@ -80,7 +80,7 @@ function Make_map(){
         document.ms.cnt.value = bomb;
         cnt = 0;
         while(1){
-                r = Math.round(Math.random()*100);
+                r = Math.round(Math.random() * 100);
                 if(Stage[r] == 0){
                         Stage[r] = 99;
                         cnt++;
@@ -226,8 +226,8 @@ function change_data(x,y){
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
                 document.write('<a 
-                               href=JavaScript:Set(',j,',',i,')><img src=Reset_data.jpg
-                oncontextmenu="change_data(',j,',',i,');return false" border=0
+                               href=JavaScript:Set('j','i')><img src=Reset_data.jpg
+                oncontextmenu="change_data('j','i');return false" border=0
                 width=32 height=32></a>');
         }
         document.write("<br>\n");
