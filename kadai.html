@@ -9,11 +9,11 @@
 
 var bomb;
 stage = new Array(100);
-Stage_blank = new Array(100);
-Stage_X = new Array(10);
-Stage_Y = new Array(10);
-Touch = new Array(100);
-var Gameover = 0;
+stage_blank = new Array(100);
+stage_X = new Array(10);
+stage_Y = new Array(10);
+touch = new Array(100);
+var gameover = 0;
         
 function gcnt(x,y){
         tcnt = 0;
@@ -71,8 +71,8 @@ function gcnt(x,y){
 function Make_map(){
         for(i=0;i<100;i++){
                 stage[i] = 0;
-                Stage_blank[i] = 0;
-                Touch[i] = 0;
+                stage_blank[i] = 0;
+                touch[i] = 0;
                 document.images[i].src = "Reset_data.jpg";
         }
 
@@ -99,12 +99,12 @@ function Make_map(){
                         }
                 }
         }
-        Gameover = 0;
+        gameover = 0;
 }
 
 function Open_bomb(){
         for(i=0;i<100;i++){
-                if((Touch[i] == 1)&&(stage[i] != 99)){
+                if((touch[i] == 1)&&(stage[i] != 99)){
                         document.images[i].src = "100.jpg";
                 }
                 if(stage[i] == 99){
@@ -116,10 +116,10 @@ function Open_bomb(){
 function Open_Stage(x,y){
         cnt1 = 0;
         cnt2 = 1;
-        Stage_X = x;
-        Stage_Y = y;
+        stage_X = x;
+        stage_Y = y;
         Q = x+10*y;
-        Stage_blank[Q] = 1;
+        stage_blank[Q] = 1;
         blank_data = stage[Q]+".jpg";
         document.images[Q].src = blank_data;
         if(stage[Q] == 0){
@@ -129,16 +129,16 @@ function Open_Stage(x,y){
 
 function check(x,y){
         Q = x+10*y;
-        if(Stage_blank[Q] == 1){
+        if(stage_blank[Q] == 1){
                 return;
         }
         if(stage[Q] == 0){
-                Stage_X[cnt2] = x;
-                Stage_Y[cnt2] = y;
+                stage_X[cnt2] = x;
+                stage_Y[cnt2] = y;
                 cnt2++;
         }
         if(stage[Q] != 99){
-                Stage_blank[Q] = 1;
+                stage_blank[Q] = 1;
                 blank_data = stage[Q]+".jpg";
                 document.images[Q].src = blank_data;
         }
@@ -149,17 +149,17 @@ function Click_Stage(x,y){
                 loop = cnt1;
                 cnt1 = cnt2;
                 for(i=loop;i<cnt1;i++){
-                        if(Stage_X[i]>0){
-                                check(Stage_X[i]-1,Stage_Y[i]);
+                        if(stage_X[i]>0){
+                                check(stage_X[i]-1,stage_Y[i]);
                         }
-                        if(Stage_X[i]<9){
-                                check(Stage_X[i]+1,Stage_Y[i]);
+                        if(stage_X[i]<9){
+                                check(stage_X[i]+1,stage_Y[i]);
                         }
-                        if(Stage_Y[i]>0){
-                                check(Stage_X[i],Stage_Y[i]-1);
+                        if(stage_Y[i]>0){
+                                check(stage_X[i],stage_Y[i]-1);
                         }
-                        if(Stage_Y[i]<9){
-                                check(Stage_X[i],Stage_Y[i]+1);
+                        if(stage_Y[i]<9){
+                                check(stage_X[i],stage_Y[i]+1);
                         }
                 }
                 if(cnt1 == cnt2){
@@ -169,31 +169,31 @@ function Click_Stage(x,y){
 }
 
 function Set(x,y){
-        if(Gameover == 1){
+        if(gameover == 1){
                 alert("リセットしてください.");
         }
         Q = x+10*y;
-        if(Stage_blank[Q] == 1){
+        if(stage_blank[Q] == 1){
                 return;
         }
         Open_Stage(x,y);
 
         if(stage[Q] == 99){
                 alert("爆弾を押しました.あなたの敗北となります.");
-                Gameover = 1;
+                gameover = 1;
                 Open_bomb();
                 return;
         }
 
         cnt = 0;
         for(i=0;i<100;i++){
-                if(Stage_blank[i] == 0){
+                if(stage_blank[i] == 0){
                         cnt++;
                 }
         }
         if(cnt == bomb){
                 alert("爆弾を全て見つけました!クリアとなります.");
-                Gameover = 1;
+                gameover = 1;
                 Open_bomb();
                 return;
         }
@@ -201,17 +201,17 @@ function Set(x,y){
 
 function change_data(x,y){
         Q = x+10*y;
-        if(Stage_blank[Q] == 1){
+        if(stage_blank[Q] == 1){
                 return;
         }
-        if(Touch[Q] == 1){
+        if(touch[Q] == 1){
                 document.images[Q].src = "Reset_data.jpg";
-                Touch[Q] = 0;
+                touch[Q] = 0;
                 return;
         }
-        if(Touch[Q] == 0){
+        if(touch[Q] == 0){
                 document.images[Q].src = "99.jpg";
-                Touch[Q] = 1;
+                touch[Q] = 1;
         }
 }
 
