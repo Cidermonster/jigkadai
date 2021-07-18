@@ -18,57 +18,57 @@ var gameover = 0;
 function gcnt(x,y){
         tcnt = 0;
         if(x>0){
-                Q = (x-1)+10*y;
-                if(stage[Q] == 99){
+                q = (x-1)+10*y;
+                if(stage[q] == 99){
                         tcnt++;
                 }
                 if(y>0){
-                        Q = (x-1)+10*(y-1);
-                        if(stage[Q] == 99){
+                        q = (x-1)+10*(y-1);
+                        if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
                 if(y<9){
-                        Q = (x-1)+10*(y+1);
-                        if(stage[Q] == 99){
+                        q = (x-1)+10*(y+1);
+                        if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
         }
         if(x<9){
-                Q = (x+1)+10*y;
-                if(stage[Q] == 99){
+                q = (x+1)+10*y;
+                if(stage[q] == 99){
                         tcnt++;
                 }
                 if(y>0){
-                        Q = (x+1)+10*(y-1);
-                        if(stage[Q] == 99){
+                        q = (x+1)+10*(y-1);
+                        if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
                 if(y<9){
-                        Q = (x+1)+10*(y+1);
-                        if(stage[Q] == 99){
+                        q = (x+1)+10*(y+1);
+                        if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
         }
         if(y>0){
-                Q = x+10*(y+1);
-                if(stage[Q] == 99){
+                q = x+10*(y+1);
+                if(stage[q] == 99){
                         tcnt++;
                 }
         }
         if(y<9){
-                Q = x+10*(y-1);
-                if(stage[Q] == 99){
+                q = x+10*(y-1);
+                if(stage[q] == 99){
                         tcnt++;
                 }
         }
         return (tcnt);
 }
 
-function Make_map(){
+function make_map(){
         for(i=0;i<100;i++){
                 stage[i] = 0;
                 stage_blank[i] = 0;
@@ -92,17 +92,17 @@ function Make_map(){
 
         for(x=0;x<10;x++){
                 for(y=0;y<10;y++){
-                        Q = x+10*y;
-                        if(stage[Q] != 99){
+                        q = x+10*y;
+                        if(stage[q] != 99){
                                 cnt = gcnt(x,y);
-                                stage[Q] = cnt;
+                                stage[q] = cnt;
                         }
                 }
         }
         gameover = 0;
 }
 
-function Open_bomb(){
+function open_bomb(){
         for(i=0;i<100;i++){
                 if((touch[i] == 1)&&(stage[i] != 99)){
                         document.images[i].src = "100.jpg";
@@ -113,38 +113,38 @@ function Open_bomb(){
         }
 }
 
-function Open_Stage(x,y){
+function open_Stage(x,y){
         cnt1 = 0;
         cnt2 = 1;
         stage_X = x;
         stage_Y = y;
-        Q = x+10*y;
-        stage_blank[Q] = 1;
-        blank_data = stage[Q]+".jpg";
-        document.images[Q].src = blank_data;
-        if(stage[Q] == 0){
-                Click_Stage();
+        q = x+10*y;
+        stage_blank[q] = 1;
+        blank_data = stage[q]+".jpg";
+        document.images[q].src = blank_data;
+        if(stage[q] == 0){
+                click_Stage();
         }
 }
 
 function check(x,y){
-        Q = x+10*y;
-        if(stage_blank[Q] == 1){
+        q = x+10*y;
+        if(stage_blank[q] == 1){
                 return;
         }
-        if(stage[Q] == 0){
+        if(stage[q] == 0){
                 stage_X[cnt2] = x;
                 stage_Y[cnt2] = y;
                 cnt2++;
         }
-        if(stage[Q] != 99){
-                stage_blank[Q] = 1;
-                blank_data = stage[Q]+".jpg";
-                document.images[Q].src = blank_data;
+        if(stage[q] != 99){
+                stage_blank[q] = 1;
+                blank_data = stage[q]+".jpg";
+                document.images[q].src = blank_data;
         }
 }
 
-function Click_Stage(x,y){
+function click_Stage(x,y){
         while(1){
                 loop = cnt1;
                 cnt1 = cnt2;
@@ -168,20 +168,20 @@ function Click_Stage(x,y){
         }
 }
 
-function Set(x,y){
+function set(x,y){
         if(gameover == 1){
                 alert("リセットしてください.");
         }
-        Q = x+10*y;
-        if(stage_blank[Q] == 1){
+        q = x+10*y;
+        if(stage_blank[q] == 1){
                 return;
         }
-        Open_Stage(x,y);
+        open_Stage(x,y);
 
-        if(stage[Q] == 99){
+        if(stage[q] == 99){
                 alert("爆弾を押しました.あなたの敗北となります.");
                 gameover = 1;
-                Open_bomb();
+                open_bomb();
                 return;
         }
 
@@ -194,30 +194,30 @@ function Set(x,y){
         if(cnt == bomb){
                 alert("爆弾を全て見つけました!クリアとなります.");
                 gameover = 1;
-                Open_bomb();
+                open_bomb();
                 return;
         }
 }
 
 function change_data(x,y){
-        Q = x+10*y;
-        if(stage_blank[Q] == 1){
+        q = x+10*y;
+        if(stage_blank[q] == 1){
                 return;
         }
-        if(touch[Q] == 1){
-                document.images[Q].src = "Reset_data.jpg";
-                touch[Q] = 0;
+        if(touch[q] == 1){
+                document.images[q].src = "Reset_data.jpg";
+                touch[q] = 0;
                 return;
         }
-        if(touch[Q] == 0){
-                document.images[Q].src = "99.jpg";
-                touch[Q] = 1;
+        if(touch[q] == 0){
+                document.images[q].src = "99.jpg";
+                touch[q] = 1;
         }
 }
 
 </script>
 </head>
-<body text="#000000" onLoad=Make_map()>
+<body text="#000000" onLoad=make_map()>
 <div align="center">
         <table border="2">
                 <tbody>
@@ -228,7 +228,7 @@ function change_data(x,y){
                                         <!--
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
-                document.write('<a href=JavaScript:Set('+j+','+i+')><img src=Reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
+                document.write('<a href=JavaScript:set('+j+','+i+')><img src=Reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
         }
         document.write("<br>\n");
 }
@@ -246,7 +246,7 @@ for(i=0;i<10;i++){
                 右クリックで旗を置けます
                 <br>
                 <hr>
-                <input type="button" value="Reset" onClick="Make_map()">
+                <input type="button" value="Reset" onClick="make_map()">
                 <hr>
         </form>
         <br>
