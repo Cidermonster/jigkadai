@@ -73,7 +73,7 @@ function make_map(){
                 stage[i] = 0;
                 stage_blank[i] = 0;
                 touch[i] = 0;
-                document.images[i].src = "Reset_data.jpg";
+                document.images[i].src = "reset_data.jpg";
         }
 
         bomb = Math.round(Math.random() * 5)+10;
@@ -205,7 +205,7 @@ function change_data(x,y){
                 return;
         }
         if(touch[q] == 1){
-                document.images[q].src = "Reset_data.jpg";
+                document.images[q].src = "reset_data.jpg";
                 touch[q] = 0;
                 return;
         }
@@ -227,7 +227,7 @@ function change_data(x,y){
                                         <!--
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
-                document.write('<a href=JavaScript:set(',j,',',i,')><img src=Reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
+                document.write('<a href=JavaScript:set(',j,',',i,')><img src=reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
         }
         document.write("<br>\n");
 }
