@@ -92,7 +92,7 @@ function make_map(){
 
         for(x=0;x<10;x++){
                 for(y=0;y<10;y++){
-                        t = x+10*y;
+                        t = y*10+x;
                         if(stage[t] != 99){
                                 cnt = gcnt(x,y);
                                 stage[t] = cnt;
