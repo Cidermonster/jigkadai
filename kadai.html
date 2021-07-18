@@ -116,8 +116,8 @@ function open_bomb(){
 function open_stage(x,y){
         cnt1 = 0;
         cnt2 = 1;
-        stage_x = x;
-        stage_y = y;
+        stage_x[0] = x;
+        stage_y[0] = y;
         q = y*10+x;
         stage_blank[q] = 1;
         blank_data = stage[q]+".jpg";
