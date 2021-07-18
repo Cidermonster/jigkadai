@@ -19,49 +19,49 @@ function gcnt(x,y){
         tcnt = 0;
         if(x>0){
                 Q = (x-1)+10*y;
-                if(Stage[Q] == 99){
+                if(stage[Q] == 99){
                         tcnt++;
                 }
                 if(y>0){
                         Q = (x-1)+10*(y-1);
-                        if(Stage[Q] == 99){
+                        if(stage[Q] == 99){
                                 tcnt++;
                         }
                 }
                 if(y<9){
                         Q = (x-1)+10*(y+1);
-                        if(Stage[Q] == 99){
+                        if(stage[Q] == 99){
                                 tcnt++;
                         }
                 }
         }
         if(x<9){
                 Q = (x+1)+10*y;
-                if(Stage[Q] == 99){
+                if(stage[Q] == 99){
                         tcnt++;
                 }
                 if(y>0){
                         Q = (x+1)+10*(y-1);
-                        if(Stage[Q] == 99){
+                        if(stage[Q] == 99){
                                 tcnt++;
                         }
                 }
                 if(y<9){
                         Q = (x+1)+10*(y+1);
-                        if(Stage[Q] == 99){
+                        if(stage[Q] == 99){
                                 tcnt++;
                         }
                 }
         }
         if(y>0){
                 Q = x+10*(y+1);
-                if(Stage[Q] == 99){
+                if(stage[Q] == 99){
                         tcnt++;
                 }
         }
         if(y<9){
                 Q = x+10*(y-1);
-                if(Stage[Q] == 99){
+                if(stage[Q] == 99){
                         tcnt++;
                 }
         }
@@ -70,7 +70,7 @@ function gcnt(x,y){
 
 function Make_map(){
         for(i=0;i<100;i++){
-                Stage[i] = 0;
+                stage[i] = 0;
                 Stage_blank[i] = 0;
                 Touch[i] = 0;
                 document.images[i].src = "Reset_data.jpg";
@@ -81,8 +81,8 @@ function Make_map(){
         cnt = 0;
         while(1){
                 r = Math.round(Math.random() * 100);
-                if(Stage[r] == 0){
-                        Stage[r] = 99;
+                if(stage[r] == 0){
+                        stage[r] = 99;
                         cnt++;
                         if(cnt == bomb){
                                 break;
@@ -93,9 +93,9 @@ function Make_map(){
         for(x=0;x<10;x++){
                 for(y=0;y<10;y++){
                         Q = x+10*y;
-                        if(Stage[Q] != 99){
+                        if(stage[Q] != 99){
                                 cnt = gcnt(x,y);
-                                Stage[Q] = cnt;
+                                stage[Q] = cnt;
                         }
                 }
         }
@@ -104,10 +104,10 @@ function Make_map(){
 
 function Open_bomb(){
         for(i=0;i<100;i++){
-                if((Touch[i] == 1)&&(Stage[i] != 99)){
+                if((Touch[i] == 1)&&(stage[i] != 99)){
                         document.images[i].src = "100.jpg";
                 }
-                if(Stage[i] == 99){
+                if(stage[i] == 99){
                         document.images[i].src = "99.jpg";
                 }
         }
@@ -120,9 +120,9 @@ function Open_Stage(x,y){
         Stage_Y = y;
         Q = x+10*y;
         Stage_blank[Q] = 1;
-        blank_data = Stage[Q]+".jpg";
+        blank_data = stage[Q]+".jpg";
         document.images[Q].src = blank_data;
-        if(Stage[Q] == 0){
+        if(stage[Q] == 0){
                 Click_Stage();
         }
 }
@@ -132,14 +132,14 @@ function check(x,y){
         if(Stage_blank[Q] == 1){
                 return;
         }
-        if(Stage[Q] == 0){
+        if(stage[Q] == 0){
                 Stage_X[cnt2] = x;
                 Stage_Y[cnt2] = y;
                 cnt2++;
         }
-        if(Stage[Q] != 99){
+        if(stage[Q] != 99){
                 Stage_blank[Q] = 1;
-                blank_data = Stage[Q]+".jpg";
+                blank_data = stage[Q]+".jpg";
                 document.images[Q].src = blank_data;
         }
 }
@@ -178,7 +178,7 @@ function Set(x,y){
         }
         Open_Stage(x,y);
 
-        if(Stage[Q] == 99){
+        if(stage[Q] == 99){
                 alert("爆弾を押しました.あなたの敗北となります.");
                 Gameover = 1;
                 Open_bomb();
