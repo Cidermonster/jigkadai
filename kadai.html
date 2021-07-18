@@ -6,6 +6,7 @@
 <head>
 <title>マインスイーパー</title>
 <script language="JavaScript">
+        <!--
 
 var bomb;
 Stage = new Array(100);
@@ -77,7 +78,7 @@ function Make_map(){
         }
 
         bomb = Math.round(Math.random() * 5)+10;
-        document.ms.cnt.value = bomb;
+        document.ms.cnt.value=bomb;
         cnt = 0;
         while(1){
                 r = Math.round(Math.random() * 100);
@@ -104,7 +105,7 @@ function Make_map(){
 
 function Open_bomb(){
         for(i=0;i<100;i++){
-                if((Touch[i] == 1) && (Stage[i] != 99)){
+                if((Touch[i] == 1)&&(Stage[i] != 99)){
                         document.images[i].src = "100.jpg";
                 }
                 if(Stage[i] == 99){
@@ -214,10 +215,10 @@ function change_data(x,y){
                 Touch[Q] = 1;
         }
 }
-
+-->
 </script>
 </head>
-<body onLoad="Make_map()">
+<body text="#ffffdd" link="#88ffff" vlink="#88ffcc" alink="#88ffcc" onLoad=Make_map()>
 <div align="center">
         <table border="2">
                 <tbody>
@@ -227,7 +228,7 @@ function change_data(x,y){
                                         <!--
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
-                document.write('<a href=JavaScript:Set('+j+','+i+')><img src=Reset_data.jpg oncontextmenu="change_data('j,',',i,');return false" border=0 width=32 height=32></a>');
+                document.write('<a href=JavaScript:Set('+j+','+i+')><img src=Reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
         }
         document.write("<br>\n");
 }
