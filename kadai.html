@@ -224,18 +224,20 @@ function change_data(x,y){
                 <tr>
                         <td>
                                 <script language="JavaScript">
+                                        <!--
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
                 document.write('<a href=JavaScript:Set('+j+','+i+')><img src=Reset_data.jpg oncontextmenu="change_data('j,',',i,');return false" border=0 width=32 height=32></a>');
         }
         document.write("<br>\n");
 }
+                                        //-->
                                 </script>
                         </td>
                         </tr>
                 </tbody>
         </table>
-        <form name="ms">
+        <form name=ms>
                 地雷の個数:
                 <input type="text" value alt name="cnt" size="5">
                 個
