@@ -18,49 +18,49 @@ var gameover = 0;
 function gcnt(x,y){
         tcnt = 0;
         if(x>0){
-                q = (x-1)+10*y;
+                q = y*10+(x-1);
                 if(stage[q] == 99){
                         tcnt++;
                 }
                 if(y>0){
-                        q = (x-1)+10*(y-1);
+                        q = (y-1)*10+x-1;
                         if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
                 if(y<9){
-                        q = (x-1)+10*(y+1);
+                        q = (y+1)*10+x-1;
                         if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
         }
         if(x<9){
-                q = (x+1)+10*y;
+                q = y*10+(x+1);
                 if(stage[q] == 99){
                         tcnt++;
                 }
                 if(y>0){
-                        q = (x+1)+10*(y-1);
+                        q = (y-1)*10+x+1;
                         if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
                 if(y<9){
-                        q = (x+1)+10*(y+1);
+                        q = (y+1)*10+x+1;
                         if(stage[q] == 99){
                                 tcnt++;
                         }
                 }
         }
         if(y>0){
-                q = x+10*(y+1);
+                q = (y-1)*10+x;
                 if(stage[q] == 99){
                         tcnt++;
                 }
         }
         if(y<9){
-                q = x+10*(y-1);
+                q = (y+1)*10+x;
                 if(stage[q] == 99){
                         tcnt++;
                 }
@@ -113,7 +113,7 @@ function open_bomb(){
         }
 }
 
-function open_Stage(x,y){
+function open_stage(x,y){
         cnt1 = 0;
         cnt2 = 1;
         stage_X = x;
@@ -123,7 +123,7 @@ function open_Stage(x,y){
         blank_data = stage[q]+".jpg";
         document.images[q].src = blank_data;
         if(stage[q] == 0){
-                click_Stage();
+                click_stage();
         }
 }
 
@@ -144,7 +144,7 @@ function check(x,y){
         }
 }
 
-function click_Stage(x,y){
+function click_stage(x,y){
         while(1){
                 loop = cnt1;
                 cnt1 = cnt2;
@@ -176,7 +176,7 @@ function set(x,y){
         if(stage_blank[q] == 1){
                 return;
         }
-        open_Stage(x,y);
+        open_stage(x,y);
 
         if(stage[q] == 99){
                 alert("爆弾を押しました.あなたの敗北となります.");
@@ -238,13 +238,13 @@ for(i=0;i<10;i++){
         </table>
         <form name=ms>
                 地雷の個数:
-                <input type=text value="" alt="" name="cnt" size="5">
+                <input type = text value="" alt="" name="cnt" size="5">
                 個
                 <br>
                 右クリックで旗を置けます
                 <br>
                 <hr>
-                <input type="button" value="Reset" onClick="make_map()">
+                <input type = button value="Reset" onClick="make_map()">
                 <hr>
         </form>
         <br>
