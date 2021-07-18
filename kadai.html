@@ -10,8 +10,8 @@
 var bomb;
 stage = new Array(100);
 stage_blank = new Array(100);
-stage_X = new Array(10);
-stage_Y = new Array(10);
+stage_x = new Array(10);
+stage_y = new Array(10);
 touch = new Array(100);
 var gameover = 0;
         
@@ -116,8 +116,8 @@ function open_bomb(){
 function open_stage(x,y){
         cnt1 = 0;
         cnt2 = 1;
-        stage_X = x;
-        stage_Y = y;
+        stage_x = x;
+        stage_y = y;
         q = x+10*y;
         stage_blank[q] = 1;
         blank_data = stage[q]+".jpg";
@@ -133,8 +133,8 @@ function check(x,y){
                 return;
         }
         if(stage[q] == 0){
-                stage_X[cnt2] = x;
-                stage_Y[cnt2] = y;
+                stage_x[cnt2] = x;
+                stage_y[cnt2] = y;
                 cnt2++;
         }
         if(stage[q] != 99){
@@ -149,17 +149,17 @@ function click_stage(x,y){
                 loop = cnt1;
                 cnt1 = cnt2;
                 for(i=loop;i<cnt1;i++){
-                        if(stage_X[i]>0){
-                                check(stage_X[i]-1,stage_Y[i]);
+                        if(stage_x[i]>0){
+                                check(stage_x[i]-1,stage_y[i]);
                         }
-                        if(stage_X[i]<9){
-                                check(stage_X[i]+1,stage_Y[i]);
+                        if(stage_x[i]<9){
+                                check(stage_x[i]+1,stage_y[i]);
                         }
-                        if(stage_Y[i]>0){
-                                check(stage_X[i],stage_Y[i]-1);
+                        if(stage_y[i]>0){
+                                check(stage_x[i],stage_y[i]-1);
                         }
-                        if(stage_Y[i]<9){
-                                check(stage_X[i],stage_Y[i]+1);
+                        if(stage_y[i]<9){
+                                check(stage_x[i],stage_y[i]+1);
                         }
                 }
                 if(cnt1 == cnt2){
