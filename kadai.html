@@ -220,7 +220,6 @@ function change_data(x,y){
 <body text="#000000" onLoad=make_map()>
 <div align="center">
         <table border="2">
-                <tbody>
                 <tr>
                         <td>
                                 <script language="JavaScript">
@@ -228,7 +227,7 @@ function change_data(x,y){
                                         <!--
 for(i=0;i<10;i++){
         for(j=0;j<10;j++){
-                document.write('<a href=JavaScript:set('+j+','+i+')><img src=Reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
+                document.write('<a href=JavaScript:set(',j,',',i,')><img src=Reset_data.jpg oncontextmenu="change_data(',j,',',i,');return false" border=0 width=32 height=32></a>');
         }
         document.write("<br>\n");
 }
@@ -236,11 +235,10 @@ for(i=0;i<10;i++){
                                 </script>
                         </td>
                         </tr>
-                </tbody>
         </table>
         <form name=ms>
                 地雷の個数:
-                <input type=text value" " alt" " name="cnt" size="5">
+                <input type=text value="" alt="" name="cnt" size="5">
                 個
                 <br>
                 右クリックで旗を置けます
