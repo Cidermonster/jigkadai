@@ -118,7 +118,7 @@ function open_stage(x,y){
         cnt2 = 1;
         stage_x = x;
         stage_y = y;
-        q = x+10*y;
+        q = y*10+x;
         stage_blank[q] = 1;
         blank_data = stage[q]+".jpg";
         document.images[q].src = blank_data;
@@ -128,7 +128,7 @@ function open_stage(x,y){
 }
 
 function check(x,y){
-        q = x+10*y;
+        q = y*10+x;
         if(stage_blank[q] == 1){
                 return;
         }
@@ -200,7 +200,7 @@ function set(x,y){
 }
 
 function change_data(x,y){
-        q = x+10*y;
+        q = y*10+x;
         if(stage_blank[q] == 1){
                 return;
         }
